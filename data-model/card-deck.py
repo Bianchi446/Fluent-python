@@ -1,10 +1,9 @@
-# implementing two special classes : __getitem__ and  __len__
 
 
 import collections
 from random import choice
 
-Card =  collections.namedtuple('Card', ['Rank', 'Suit'])
+Card =  collections.namedtuple('Card', ['rank', 'suit'])   # Rank and suit are counted as attributes
 
 class FrenchDeck :
     ranks = [str(n) for n in range(2,11)] + list('JQKA')
@@ -29,3 +28,28 @@ deck = FrenchDeck()
 print(len(deck))
 
 print(choice(deck))
+
+# Our FrenchDesk class support data slicing
+
+print(deck[:3])
+print(deck[:5])
+
+# It's also iterable 
+
+#for card in deck:
+    #print(card)
+
+
+# We can use the spades_high method to sort the cards
+
+suit_value = dict(spades=3, hearts=2, diamonds=1, clubs=0)
+
+def spades_high(card):
+        rank_value = FrenchDeck.ranks.index(card.rank)
+        return rank_value * len(suit_value) + suit_value[card.suit]
+
+
+for card in sorted(deck, key=spades_high):
+    print(card)
+
+
